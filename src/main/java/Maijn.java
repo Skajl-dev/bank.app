@@ -2,6 +2,8 @@ import commands.AccountOperations;
 import dao.AccountDao;
 import dao.AccountDaoImpl;
 import model.Account;
+import model.AccountType;
+import org.decimal4j.util.DoubleRounder;
 
 import java.util.List;
 
@@ -9,10 +11,9 @@ public class Maijn {
 
     public static void main(String[] args) {
         AccountDao dao = new AccountDaoImpl();
-        Account vasya = dao.findByNumber("0939874561");
-        AccountOperations accountOperations = new AccountOperations(vasya, dao);
-        accountOperations.statusUp();
-
+        Account sonya = dao.findByNumber("0939874561");
+        AccountOperations accountOperations = new AccountOperations(sonya, dao);
+        accountOperations.makeTransaction();
 
         //List<Account> all = dao.findAll();
         //Account me = dao.findByNumber("0500536283");

@@ -10,6 +10,9 @@ public class ConsoleHelper {
     public static void writeMessage(String message) {
         System.out.println(message);
     }
+    public static void writeMessage(boolean message) {
+        System.out.println(message);
+    }
 
     public static String readString() throws IOException {
         String text = reader.readLine();
@@ -20,7 +23,7 @@ public class ConsoleHelper {
         int number = 0;
         try {
             number = Integer.parseInt(readString());
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Please enter the number correctly: ");
             readInt();
         }
@@ -31,7 +34,7 @@ public class ConsoleHelper {
         double number = 0;
         try {
             number = Double.parseDouble(readString());
-        } catch (IOException e) {
+        } catch (Exception e) {
             System.out.println("Please enter the number correctly: ");
             readDouble();
         }
