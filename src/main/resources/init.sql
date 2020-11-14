@@ -15,12 +15,11 @@ CREATE TABLE account
     email           VARCHAR(70)  NULL,
     accountType     VARCHAR(9)   NULL,
     isCurrency      BIT(1)       NULL,
-    creation_time   date         NULL,
+    creation_time   DATE         NULL,
     UAH_balance     DOUBLE       NULL,
     dollar_balance  DOUBLE       NULL,
     euro_balance    DOUBLE       NULL,
         PRIMARY KEY (phoneNumber)
 
 )
-    ENGINE = InnoDB
-    DEFAULT CHARACTER SET = utf8;
+

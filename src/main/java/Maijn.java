@@ -1,19 +1,24 @@
-import commands.AccountOperations;
-import dao.AccountDao;
-import dao.AccountDaoImpl;
-import model.Account;
-import model.AccountType;
-import org.decimal4j.util.DoubleRounder;
+import dao.Dao;
+import dao.DaoImpl;
+import model.Exchange_courses;
 
-import java.util.List;
+import java.text.SimpleDateFormat;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 public class Maijn {
 
     public static void main(String[] args) {
-        AccountDao dao = new AccountDaoImpl();
-        Account sonya = dao.findByNumber("0939874561");
-        AccountOperations accountOperations = new AccountOperations(sonya, dao);
-        accountOperations.makeTransaction();
+        Dao dao = new DaoImpl();
+        //Account sonya = dao.findByNumber("0939874561");
+        //AccountOperations accountOperations = new AccountOperations(sonya, dao);
+        //accountOperations.makeTransaction();
+       Exchange_courses ex = dao.findByDate(LocalDateTime.now().toLocalDate());
+        System.out.println(ex.toString());
+
+
+
+
 
         //List<Account> all = dao.findAll();
         //Account me = dao.findByNumber("0500536283");

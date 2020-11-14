@@ -925,54 +925,83 @@ SELECT|sys.sys_config:null
     <table id="289" parent="2" name="account">
       <Collation>utf8_general_ci</Collation>
     </table>
-    <column id="290" parent="289" name="phoneNumber">
+    <table id="290" parent="2" name="exchange_courses">
+      <Collation>utf8_general_ci</Collation>
+    </table>
+    <column id="291" parent="289" name="phoneNumber">
       <Position>1</Position>
       <DataType>varchar(10)|0s</DataType>
       <NotNull>1</NotNull>
     </column>
-    <column id="291" parent="289" name="password">
+    <column id="292" parent="289" name="password">
       <Position>2</Position>
       <DataType>varchar(15)|0s</DataType>
     </column>
-    <column id="292" parent="289" name="name">
+    <column id="293" parent="289" name="name">
       <Position>3</Position>
       <DataType>varchar(30)|0s</DataType>
     </column>
-    <column id="293" parent="289" name="surname">
+    <column id="294" parent="289" name="surname">
       <Position>4</Position>
       <DataType>varchar(30)|0s</DataType>
     </column>
-    <column id="294" parent="289" name="email">
+    <column id="295" parent="289" name="email">
       <Position>5</Position>
       <DataType>varchar(70)|0s</DataType>
     </column>
-    <column id="295" parent="289" name="accountType">
+    <column id="296" parent="289" name="accountType">
       <Position>6</Position>
       <DataType>varchar(9)|0s</DataType>
     </column>
-    <column id="296" parent="289" name="isCurrency">
+    <column id="297" parent="289" name="isCurrency">
       <Position>7</Position>
       <DataType>bit(1)|0s</DataType>
     </column>
-    <column id="297" parent="289" name="creation_time">
+    <column id="298" parent="289" name="creation_time">
       <Position>8</Position>
       <DataType>date|0s</DataType>
     </column>
-    <column id="298" parent="289" name="UAH_balance">
+    <column id="299" parent="289" name="UAH_balance">
       <Position>9</Position>
       <DataType>double|0s</DataType>
     </column>
-    <column id="299" parent="289" name="dollar_balance">
+    <column id="300" parent="289" name="dollar_balance">
       <Position>10</Position>
       <DataType>double|0s</DataType>
     </column>
-    <column id="300" parent="289" name="euro_balance">
+    <column id="301" parent="289" name="euro_balance">
       <Position>11</Position>
       <DataType>double|0s</DataType>
     </column>
-    <key id="301" parent="289" name="PRIMARY">
+    <key id="302" parent="289" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>phoneNumber</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <column id="303" parent="290" name="creation_time">
+      <Position>1</Position>
+      <DataType>date|0s</DataType>
+      <NotNull>1</NotNull>
+    </column>
+    <column id="304" parent="290" name="UAH_to_Dollar">
+      <Position>2</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <column id="305" parent="290" name="Dollar_to_UAH">
+      <Position>3</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <column id="306" parent="290" name="UAH_to_Euro">
+      <Position>4</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <column id="307" parent="290" name="Euro_to_UAH">
+      <Position>5</Position>
+      <DataType>double|0s</DataType>
+    </column>
+    <key id="308" parent="290" name="PRIMARY">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>creation_time</ColNames>
       <Primary>1</Primary>
     </key>
   </database-model>

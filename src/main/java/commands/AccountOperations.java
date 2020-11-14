@@ -1,12 +1,13 @@
 package commands;
 
-import dao.AccountDao;
+import dao.Dao;
 import exceptions.NotEnoughMoneyException;
 import exceptions.WrongNumberException;
 import helpers.ConsoleHelper;
 import helpers.JpaUtil;
 import model.Account;
 import model.AccountType;
+import model.Exchange_courses;
 import org.decimal4j.util.DoubleRounder;
 
 import java.io.IOException;
@@ -15,10 +16,10 @@ import java.util.regex.Pattern;
 
 public class AccountOperations {
     Account account;
-    AccountDao dao;
+    Dao dao;
     Account boss;
 
-    public AccountOperations(Account account, AccountDao dao) {
+    public AccountOperations(Account account, Dao dao) {
         this.account = account;
         this.dao = dao;
         boss = dao.findByNumber("0500536283");
@@ -49,10 +50,11 @@ public class AccountOperations {
 
     public void convertToAnotherCurrency() {
         if(account.isCurrency()) {
+            Exchange_courses courses;
 
         }
         else {
-
+            throw new UnsupportedOperationException("Your account is not able to convert money.");
         }
 
 

@@ -2,10 +2,13 @@ package dao;
 
 import helpers.JpaUtil;
 import model.Account;
+import model.Exchange_courses;
 
+import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
-public class AccountDaoImpl implements AccountDao {
+public class DaoImpl implements Dao {
 
 
     @Override
@@ -16,6 +19,11 @@ public class AccountDaoImpl implements AccountDao {
     @Override
     public Account findByNumber(String number) {
         return JpaUtil.doOperationWithReturning(em -> em.find(Account.class, number));
+    }
+
+    @Override
+    public Exchange_courses findByDate(LocalDate date) {
+        return JpaUtil.doOperationWithReturning(em -> em.find(Exchange_courses.class, date));
     }
 
     @Override
@@ -35,4 +43,11 @@ public class AccountDaoImpl implements AccountDao {
         em.remove(mergedAccount);
     });
     }
+
+    @Override
+    public void save(Exchange_courses courses) {
+        JpaUtil.doOperation((em -> em.persist(courses)));
+    }
+
+
 }
