@@ -42,7 +42,7 @@ public class Account {
 
 
 
-    public Account(String phoneNumber, String password, String name, String surname, String email) {
+    public Account(String phoneNumber, String password, String name, String surname, String email, LocalDate date) {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.name = name;
@@ -53,7 +53,7 @@ public class Account {
         UAH_balance = 0.0;
         dollar_balance = 0.0;
         euro_balance = 0.0;
-        creation_time = LocalDateTime.now().toLocalDate();
+        creation_time = date;
     }
 
     public Account() {

@@ -1,21 +1,19 @@
+import commands.AccountOperations;
 import dao.Dao;
-import dao.DaoImpl;
-import model.Exchange_courses;
-
-import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.util.Date;
+import dao.DaoJPA_Impl;
+import model.Account;
+import model.AccountType;
 
 public class Maijn {
 
     public static void main(String[] args) {
-        Dao dao = new DaoImpl();
-        //Account sonya = dao.findByNumber("0939874561");
-        //AccountOperations accountOperations = new AccountOperations(sonya, dao);
-        //accountOperations.makeTransaction();
-       Exchange_courses ex = dao.findByDate(LocalDateTime.now().toLocalDate());
-        System.out.println(ex.toString());
+        Dao dao = new DaoJPA_Impl();
+        Account vasya = dao.findByNumber("0500536283");
+        AccountOperations accountOperations = new AccountOperations(vasya, dao);
+        //accountOperations.makeAccountMultiCurrency();
 
+      vasya.setUAH_balance(18200);
+      dao.update(vasya);
 
 
 

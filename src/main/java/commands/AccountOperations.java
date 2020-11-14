@@ -4,7 +4,6 @@ import dao.Dao;
 import exceptions.NotEnoughMoneyException;
 import exceptions.WrongNumberException;
 import helpers.ConsoleHelper;
-import helpers.JpaUtil;
 import model.Account;
 import model.AccountType;
 import model.Exchange_courses;
@@ -29,31 +28,22 @@ public class AccountOperations {
         if (account.isCurrency()) {
             ConsoleHelper.writeMessage("Your account is already multi-currency.");
         } else {
-            ConsoleHelper.writeMessage("By making the account multi-currency you will have the opportunity to exchange your UAH for " +
+            ConsoleHelper.writeMessage("By making the account multi-currency you will have the opportunity to exchange your grivnyas for " +
                     "euros and dollars at the best exchange rate and make transfers in currency.\nYou will be charged with 650UAH" +
                     " to make your account multi-currency.\nBefore start make sure that you have enough money on your account." +
                     "\n\nIf you agree press 1, any other number to exit.");
             int answer = ConsoleHelper.readInt();
-            if (answer == 1) {
-                if (account.getUAH_balance() >= 650) {
-                    account.setUAH_balance(account.getUAH_balance() - 650);
-                    account.setCurrency(true);
-                    boss.setUAH_balance(boss.getUAH_balance() + 650);
-                    dao.update(account);
-                    dao.update(boss);
-                } else {
-                    throw new NotEnoughMoneyException("Not enough money to perform status changing");
-                }
-            }
+            payingForSmth(answer, 650);
+            account.setCurrency(true);
+            dao.buySomething(account, boss);
         }
     }
 
     public void convertToAnotherCurrency() {
-        if(account.isCurrency()) {
+        if (account.isCurrency()) {
             Exchange_courses courses;
 
-        }
-        else {
+        } else {
             throw new UnsupportedOperationException("Your account is not able to convert money.");
         }
 
@@ -76,6 +66,7 @@ public class AccountOperations {
         double sum = ConsoleHelper.readDouble();
         sum = DoubleRounder.round(sum, 2);
         double commission = defineCommission(account.getAccountType());
+
         ConsoleHelper.writeMessage("You will be charged with the " + commission + "% commission to perform this transaction." +
                 "\nPlease verify all the introduced data and make sure you have enough money on your account." +
                 "\n\nIf you agree press 1, any other number to exit.");
@@ -86,40 +77,36 @@ public class AccountOperations {
                 double sumToSend = sum * (100 - commission) / 100;
                 double fee = sum - sumToSend;
                 boss.setUAH_balance(boss.getUAH_balance() + fee);
-
                 Account receiver = dao.findByNumber(number);
                 receiver.setUAH_balance(receiver.getUAH_balance() + sumToSend);
-                dao.update(account);
-                dao.update(boss);
-                dao.update(receiver);
-            }
-            else {
+                dao.makeTransaction(account, receiver, boss);
+            } else {
                 throw new NotEnoughMoneyException("Not enough money to perform status changing");
             }
-
         }
-
     }
-
-
-
 
 
     public void statusUp() {
         if (account.getAccountType() == AccountType.PLATINUM) {
-            ConsoleHelper.writeMessage("Your status is above the sky, you can not make it better.");
+            ConsoleHelper.writeMessage("Your current status is PLATINUM." +
+                    "\nYour status is above the sky, it can not be any higher.");
         } else if (account.getAccountType() == AccountType.GOLD) {
-            ConsoleHelper.writeMessage("With PLATINUM status your transaction commission will be 0.0%. You will be charged with" +
+            ConsoleHelper.writeMessage("Your current status is GOLD.\nWith PLATINUM status your transaction commission will be 0.0%. You will be charged with" +
                     " 10 000UAH to get this status.\nBefore start make sure that you have enough money on your account." +
                     "\n\nIf you agree press 1, any other number to exit.");
             int answer = ConsoleHelper.readInt();
-            statusUpPerforming(answer, 10000.0, AccountType.PLATINUM);
+            payingForSmth(answer, 10000);
+            account.setAccountType(AccountType.PLATINUM);
+            dao.buySomething(account, boss);
         } else if (account.getAccountType() == AccountType.STANDARD) {
-            ConsoleHelper.writeMessage("With GOLD status your transaction commission will be 0.5%. You will be charged with" +
+            ConsoleHelper.writeMessage("Your current status is STANDARD.\nWith GOLD status your transaction commission will be 0.5%. You will be charged with" +
                     " 5 000UAH to get this status. \nBefore start make sure that you have enough money on your account." +
                     "\n\nIf you agree press 1, any other number to exit.");
             int answer = ConsoleHelper.readInt();
-            statusUpPerforming(answer, 5000.0, AccountType.GOLD);
+            payingForSmth(answer, 5000);
+            account.setAccountType(AccountType.GOLD);
+            dao.buySomething(account, boss);
         }
     }
 
@@ -140,20 +127,12 @@ public class AccountOperations {
 
     public void exit() {
         ConsoleHelper.writeMessage("Goodbye! Hope to see you soon...");
-        JpaUtil.close();
+        dao.close();
         System.exit(0);
     }
 
 
-
-
-
-
-
-
-
-
-    public void numberRealityCheck(String phoneNumber) {
+    private void numberRealityCheck(String phoneNumber) {
 
         if (account.getPhoneNumber().equals(phoneNumber)) {
             throw new WrongNumberException("You can not send money to yourself... Try again");
@@ -190,15 +169,12 @@ public class AccountOperations {
         return 1.0;
     }
 
-    public void statusUpPerforming(int answer, double amount, AccountType nextStatus) {
+    private void payingForSmth(int answer, double amount) {
         if (answer == 1) {
             if (account.getUAH_balance() >= amount) {
                 account.setUAH_balance(account.getUAH_balance() - amount);
-                account.setAccountType(nextStatus);
                 boss.setUAH_balance(boss.getUAH_balance() + amount);
-                dao.update(account);
-                dao.update(boss);
-            } else {
+            }  else {
                 throw new NotEnoughMoneyException("Not enough money to perform status changing");
             }
         }
