@@ -8,6 +8,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -64,7 +65,7 @@ public class DaoJPA_Impl implements Dao {
     }
 
     @Override
-    public Exchange_courses findByDate(LocalDate date) {
+    public Exchange_courses findByDate(Date date) {
         return doOperationWithReturning(em -> em.find(Exchange_courses.class, date));
     }
 

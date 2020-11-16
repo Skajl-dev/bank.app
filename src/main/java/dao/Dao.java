@@ -4,6 +4,7 @@ import model.Account;
 import model.Exchange_courses;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 public interface Dao {
@@ -20,7 +21,7 @@ public interface Dao {
 
     void save(Exchange_courses courses);
 
-    Exchange_courses findByDate(LocalDate date);
+    Exchange_courses findByDate(Date date);
 
     void close();
 

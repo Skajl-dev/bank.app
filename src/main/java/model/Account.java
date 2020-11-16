@@ -1,8 +1,7 @@
 package model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "account")
@@ -30,9 +29,6 @@ public class Account {
     @Column(name = "isCurrency")
     private boolean isCurrency;
 
-    @Column(name = "creation_time")
-    private LocalDate creation_time;
-
     @Column(name = "UAH_balance")
     private double UAH_balance;
     @Column(name = "dollar_balance")
@@ -40,9 +36,12 @@ public class Account {
     @Column(name = "euro_balance")
     private double euro_balance;
 
+    @Temporal(TemporalType.DATE)
+    @Column(name = "creation_time")
+    private Date creation_time;
 
 
-    public Account(String phoneNumber, String password, String name, String surname, String email, LocalDate date) {
+    public Account(String phoneNumber, String password, String name, String surname, String email) {
         this.password = password;
         this.phoneNumber = phoneNumber;
         this.name = name;
@@ -53,7 +52,7 @@ public class Account {
         UAH_balance = 0.0;
         dollar_balance = 0.0;
         euro_balance = 0.0;
-        creation_time = date;
+        creation_time = new Date();
     }
 
     public Account() {
@@ -132,8 +131,6 @@ public class Account {
         this.euro_balance = euro_balance;
     }
 
-
-
     public String getPassword() {
         return password;
     }
@@ -142,11 +139,11 @@ public class Account {
         this.password = password;
     }
 
-    public LocalDate getCreationTime() {
+    public Date getCreationTime() {
         return creation_time;
     }
 
-    public void setCreationTime(LocalDate creationTime) {
+    public void setCreationTime(Date creationTime) {
         this.creation_time = creationTime;
     }
 

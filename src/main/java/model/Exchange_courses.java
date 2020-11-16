@@ -1,16 +1,15 @@
 package model;
 
 import javax.persistence.*;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.Date;
 
 @Entity
 @Table(name = "exchange_courses")
 public class Exchange_courses {
     @Id
+    @Temporal(TemporalType.DATE)
     @Column(name = "creation_time")
-    LocalDate creation_time;
+    Date creation_time;
 
     @Column(name = "UAH_to_Dollar")
     double UAH_to_Dollar;
@@ -32,15 +31,15 @@ public class Exchange_courses {
         Dollar_to_UAH = dollar_to_UAH;
         this.UAH_to_Euro = UAH_to_Euro;
         Euro_to_UAH = euro_to_UAH;
-        creation_time = LocalDateTime.now().toLocalDate();
+        creation_time = new Date();
     }
 
 
-    public LocalDate getDate() {
+    public Date getDate() {
         return creation_time;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(Date date) {
         this.creation_time = date;
     }
 
