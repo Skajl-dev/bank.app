@@ -7,8 +7,8 @@ import javax.mail.internet.MimeMessage;
 import java.util.Properties;
 
 public class EmailCodeSender {
-    private String username = "bat93222888@gmail.com";
-    private String password = "23145618qw";
+    private String username;
+    private String password;
     private String subject = "bank.app VERIFICATION";
     private Properties props;
 

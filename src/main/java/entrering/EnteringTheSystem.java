@@ -7,6 +7,7 @@ import java.util.regex.Pattern;
 
 public abstract class EnteringTheSystem {
     public Dao dao;
+
     private final Pattern PHONE_NUMBER_REGEX = Pattern.compile("^(039|050|063|066|067|068|091|092|093|094|095|096|097" +
             "|098|099|031|032|033|034|035|036|037|038|041|042|043|044|046|047" +
             "|048|049|051|052|053|054|055|056|057|058|059|061|062|064|065|069)\\d{7}");
