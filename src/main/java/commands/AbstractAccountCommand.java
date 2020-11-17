@@ -15,6 +15,12 @@ public abstract class AbstractAccountCommand implements Command {
     Dao dao;
     Account boss;
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    protected final String VERIFY = "Please verify all the introduced data and make sure you have enough money on your account." +
+            "\n\nIf you agree press 1, any other number to exit.";
+    protected final String SYSTEM_OUT_OF_MONEY = "\n\nUnfortunately, there are not enough funds in the system to perform this operation..." +
+            "\nYour balance will not be changed.";
+    protected final String PURCHASE_VERIFY = "\nBefore start make sure that you have enough money on your account." +
+            "\n\nIf you agree press 1, any other number to exit.";
 
     public AbstractAccountCommand(Account account, Dao dao) {
         this.account = account;

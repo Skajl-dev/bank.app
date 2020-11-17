@@ -1,21 +1,32 @@
 import commands.*;
 import dao.Dao;
 import dao.DaoJPA_Impl;
+import entrering.EmailCodeSender;
+import entrering.Sign_up;
 import helpers.CommandExecutor;
 import helpers.ConsoleHelper;
 import helpers.Operation;
 import model.Account;
 import model.AccountType;
 import model.Exchange_courses;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+import java.io.IOException;
 
 public class Maijn {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         Dao dao = new DaoJPA_Impl();
-        Account sonia = dao.findByNumber("0978521346");
+        //ApplicationContext context = new AnnotationConfigApplicationContext(BankConfig.class);
+       // Dao dao = (DaoJPA_Impl) context.getBean(DaoJPA_Impl.class);
+       //Account sonia = dao.findByNumber("0978521346");
+        EmailCodeSender emailCodeSender = new EmailCodeSender();
+        Account account = new Sign_up(dao, emailCodeSender).signUp();
+        //
+        //emailCodeSender.send("Hi girls", "hellocaniboostya@gmail.com ");
 
-
-         CommandExecutor commandExecutor = new CommandExecutor(new BalanceCheckCommand(sonia, dao),
+        /* CommandExecutor commandExecutor = new CommandExecutor(new BalanceCheckCommand(sonia, dao),
                  new MakeTransactionCommand(sonia, dao), new ConvertToAnotherCurrencyCommand(sonia, dao),
                 new StatusUpCommand(sonia, dao), new MakeAccountMultiCurrencyCommand(sonia, dao), new ShowInfoCommand(), new ExitCommand(sonia, dao));
         Operation operation = null;
@@ -27,7 +38,7 @@ public class Maijn {
             }
             commandExecutor.execute(operation);
         } while (operation != Operation.EXIT);
-
+*/
 
     }
 

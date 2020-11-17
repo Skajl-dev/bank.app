@@ -31,72 +31,78 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
                 int answer = ConsoleHelper.readInt();
                 switch (answer) {
                     case 1:
-                        ConsoleHelper.writeMessage("Enter the amount you want to change: ");
-                        double sum1 = DoubleRounder.round(ConsoleHelper.readDouble(), 2);
-                        ConsoleHelper.writeMessage(
-                                "Please verify all the introduced data and make sure you have enough money on your account." +
-                                "\n\nIf you agree press 1, any other number to exit.");
+                        double sum1 = askingForAmount();
+                        ConsoleHelper.writeMessage(VERIFY);
                         int answer1 = ConsoleHelper.readInt();
                         if (answer1 == 1) {
-                            payingForSmthMoneyChange(sum1);
                             double dollars1 = sum1 / courses.getUAHtoDollar();
-                            boss.setDollar_balance(boss.getDollar_balance() - dollars1);
-                            account.setDollar_balance(account.getDollar_balance() + dollars1);
-                            dao.buySomething(account, boss);
+                            if (boss.getDollar_balance() >= dollars1) {
+                                payingForSmthMoneyChange(sum1);
+                                boss.setDollar_balance(boss.getDollar_balance() - dollars1);
+                                account.setDollar_balance(account.getDollar_balance() + dollars1);
+                                dao.buySomething(account, boss);
+                            } else {
+                                ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
+                            }
                         }
                         break;
 
                     case 2:
-                        ConsoleHelper.writeMessage("Enter the amount you want to change: ");
-                        double sum2 = DoubleRounder.round(ConsoleHelper.readDouble(), 2);
-                        ConsoleHelper.writeMessage(
-                                "Please verify all the introduced data and make sure you have enough money on your account." +
-                                        "\n\nIf you agree press 1, any other number to exit.");
+                        double sum2 = askingForAmount();
+                        ConsoleHelper.writeMessage(VERIFY);
                         int answer2 = ConsoleHelper.readInt();
                         if (answer2 == 1) {
                             if (account.getDollar_balance() >= sum2) {
-                                account.setDollar_balance(account.getDollar_balance() - sum2);
-                                boss.setDollar_balance(boss.getDollar_balance() + sum2);
                                 double grn2 = sum2 * courses.getDollar_to_UAH();
-                                account.setUAH_balance(account.getUAH_balance() + grn2);
-                                boss.setUAH_balance(boss.getUAH_balance() - grn2);
-                                dao.buySomething(account, boss);
+                                if (boss.getUAH_balance() >= grn2) {
+                                    account.setDollar_balance(account.getDollar_balance() - sum2);
+                                    boss.setDollar_balance(boss.getDollar_balance() + sum2);
+                                    account.setUAH_balance(account.getUAH_balance() + grn2);
+                                    boss.setUAH_balance(boss.getUAH_balance() - grn2);
+                                    dao.buySomething(account, boss);
+                                } else {
+                                    ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
+                                }
                             } else {
                                 throw new NotEnoughMoneyException("Not enough money...");
                             }
                         }
                         break;
+
                     case 3:
-                        ConsoleHelper.writeMessage("Enter the amount you want to change: ");
-                        double sum3 = DoubleRounder.round(ConsoleHelper.readDouble(), 2);
-                        ConsoleHelper.writeMessage(
-                                "Please verify all the introduced data and make sure you have enough money on your account." +
-                                        "\n\nIf you agree press 1, any other number to exit.");
+                        double sum3 = askingForAmount();
+                        ConsoleHelper.writeMessage(VERIFY);
                         int answer3 = ConsoleHelper.readInt();
                         if (answer3 == 1) {
-                            payingForSmthMoneyChange(sum3);
+
                             double euro3 = sum3 / courses.getUAH_to_Euro();
-                            boss.setEuro_balance(boss.getEuro_balance() - euro3);
-                            account.setEuro_balance(account.getEuro_balance() + euro3);
-                            dao.buySomething(account, boss);
+                            if (boss.getEuro_balance() >= euro3) {
+                                payingForSmthMoneyChange(sum3);
+                                boss.setEuro_balance(boss.getEuro_balance() - euro3);
+                                account.setEuro_balance(account.getEuro_balance() + euro3);
+                                dao.buySomething(account, boss);
+                            } else {
+                                ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
+                            }
                         }
                         break;
+
                     case 4:
-                        ConsoleHelper.writeMessage("Enter the amount you want to change: ");
-                        double sum4 = DoubleRounder.round(ConsoleHelper.readDouble(), 2);
-                        ConsoleHelper.writeMessage(
-                                "Please verify all the introduced data and make sure you have enough money on your account." +
-                                        "\n\nIf you agree press 1, any other number to exit.");
+                        double sum4 = askingForAmount();
+                        ConsoleHelper.writeMessage(VERIFY);
                         int answer4 = ConsoleHelper.readInt();
                         if (answer4 == 1) {
                             if (account.getEuro_balance() >= sum4) {
-                                account.setEuro_balance(account.getEuro_balance() - sum4);
-                                boss.setEuro_balance(boss.getEuro_balance() + sum4);
                                 double grn4 = sum4 * courses.getEuro_to_UAH();
-                                account.setUAH_balance(account.getUAH_balance() + grn4);
-                                boss.setUAH_balance(boss.getUAH_balance() - grn4);
-                                dao.buySomething(account, boss);
-
+                                if (boss.getUAH_balance() >= grn4) {
+                                    account.setEuro_balance(account.getEuro_balance() - sum4);
+                                    boss.setEuro_balance(boss.getEuro_balance() + sum4);
+                                    account.setUAH_balance(account.getUAH_balance() + grn4);
+                                    boss.setUAH_balance(boss.getUAH_balance() - grn4);
+                                    dao.buySomething(account, boss);
+                                } else {
+                                    ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
+                                }
                             } else {
                                 throw new NotEnoughMoneyException("Not enough money...");
                             }
@@ -110,5 +116,10 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
         } else {
             throw new UnsupportedOperationException("Your account is not able to convert money.");
         }
+    }
+
+    private double askingForAmount() {
+        ConsoleHelper.writeMessage("Enter the amount you want to change: ");
+        return DoubleRounder.round(ConsoleHelper.readDouble(), 2);
     }
 }

@@ -16,8 +16,7 @@ public class MakeAccountMultiCurrencyCommand extends AbstractAccountCommand {
         } else {
             ConsoleHelper.writeMessage("By making the account multi-currency you will have the opportunity to exchange your grivnyas for " +
                     "euros and dollars at the best exchange rate and make transfers in currency.\nYou will be charged with 650UAH" +
-                    " to make your account multi-currency.\nBefore start make sure that you have enough money on your account." +
-                    "\n\nIf you agree press 1, any other number to exit.");
+                    " to make your account multi-currency." + PURCHASE_VERIFY);
             int answer = ConsoleHelper.readInt();
             if (answer == 1) {
                 payingForSmthMoneyChange(650);
