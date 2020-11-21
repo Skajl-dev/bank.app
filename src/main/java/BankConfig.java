@@ -91,12 +91,6 @@ public class BankConfig {
 
     @Bean
     @Scope("singleton")
-    public MakeAccountMultiCurrencyCommand makeAccountMultiCurrencyCommand() {
-        return new MakeAccountMultiCurrencyCommand(account(), dao());
-    }
-
-    @Bean
-    @Scope("singleton")
     public MakeTransactionCommand makeTransactionCommand() {
         return new MakeTransactionCommand(account(), dao());
     }
@@ -104,20 +98,21 @@ public class BankConfig {
     @Bean
     @Scope("singleton")
     public ShowInfoCommand showInfoCommand() {
-        return new ShowInfoCommand();
+        return new ShowInfoCommand(account(), dao());
     }
 
-    @Bean
-    @Scope("singleton")
-    public StatusUpCommand statusUpCommand() {
-        return new StatusUpCommand(account(), dao());
-    }
 
     @Bean
     @Scope("singleton")
     public CommandExecutor commandExecutor() {
         return new CommandExecutor(balanceCheckCommand(), makeTransactionCommand(), convertToAnotherCurrencyCommand(),
-                statusUpCommand(), makeAccountMultiCurrencyCommand(), showInfoCommand(), exitCommand());
+                upgradeCommand(), showInfoCommand(), exitCommand());
+    }
+
+    @Bean
+    @Scope("singleton")
+    public AccountUpgradeCommand upgradeCommand() {
+        return new AccountUpgradeCommand(account(), dao());
     }
 
     @Bean
@@ -138,8 +133,7 @@ public class BankConfig {
         ConsoleHelper.writeMessage(String.format("\t %d - check balance", Operation.BALANCE_CHECK.ordinal()));
         ConsoleHelper.writeMessage(String.format("\t %d - make a transaction", Operation.TRANSACTION.ordinal()));
         ConsoleHelper.writeMessage(String.format("\t %d - money exchange", Operation.CONVERT_TO_ANOTHER_CURRENCY.ordinal()));
-        ConsoleHelper.writeMessage(String.format("\t %d - status up", Operation.STATUS_UP.ordinal()));
-        ConsoleHelper.writeMessage(String.format("\t %d - make account multi-currency", Operation.MAKE_MULTICURRENCY.ordinal()));
+        ConsoleHelper.writeMessage(String.format("\t %d - upgrade account", Operation.UPGRADE.ordinal()));
         ConsoleHelper.writeMessage(String.format("\t %d - info", Operation.INFO.ordinal()));
         ConsoleHelper.writeMessage("");
         ConsoleHelper.writeMessage(String.format("\t %d - exit", Operation.EXIT.ordinal()));

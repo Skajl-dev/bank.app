@@ -11,9 +11,10 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 public abstract class AbstractAccountCommand implements Command {
-    Account account;
-    Dao dao;
-    Account boss;
+    protected Account account;
+    protected Dao dao;
+    protected static Account boss;
+
     SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     protected final String VERIFY = "Please verify all the introduced data and make sure you have enough money on your account." +
             "\n\nIf you agree press 1, any other number to exit.";
@@ -27,6 +28,8 @@ public abstract class AbstractAccountCommand implements Command {
         this.dao = dao;
         boss = dao.findByNumber("0000000000");
     }
+
+
 
     protected void numberRealityCheck(String phoneNumber) {
 

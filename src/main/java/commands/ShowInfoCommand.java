@@ -1,10 +1,14 @@
 package commands;
 
+import dao.Dao;
 import helpers.ConsoleHelper;
+import model.Account;
 
-public class ShowInfoCommand implements Command {
+public class ShowInfoCommand extends AbstractAccountCommand {
 
-    public ShowInfoCommand() {
+
+    public ShowInfoCommand(Account account, Dao dao) {
+        super(account, dao);
     }
 
     @Override
