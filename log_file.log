@@ -1,0 +1,18 @@
+2020-11-22 02:28:31 INFO  LogHelper:31 - HHH000204: Processing PersistenceUnitInfo [name: org.hibernate.bankApp]
+2020-11-22 02:28:32 INFO  Version:44 - HHH000412: Hibernate ORM core version 5.4.23.Final
+2020-11-22 02:28:32 INFO  Version:56 - HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2020-11-22 02:28:32 WARN  pooling:72 - HHH10001002: Using Hibernate built-in connection pool (not for production use!)
+2020-11-22 02:28:32 INFO  pooling:115 - HHH10001005: using driver [com.mysql.jdbc.Driver] at URL [jdbc:mysql://localhost:3306/bank.app?serverTimezone=UTC]
+2020-11-22 02:28:32 INFO  pooling:124 - HHH10001001: Connection properties: {CharSet=utf8, password=****, autocommit=false, useUnicode=true, characterEncoding=utf8, user=root}
+2020-11-22 02:28:32 INFO  pooling:129 - HHH10001003: Autocommit mode: false
+2020-11-22 02:28:32 INFO  DriverManagerConnectionProviderImpl:249 - HHH000115: Hibernate connection pool size: 20 (min=1)
+2020-11-22 02:28:33 INFO  Dialect:170 - HHH000400: Using dialect: org.hibernate.dialect.MySQL5Dialect
+2020-11-22 02:28:33 INFO  access:47 - HHH10001501: Connection obtained from JdbcConnectionAccess [org.hibernate.engine.jdbc.env.internal.JdbcEnvironmentInitiator$ConnectionProviderJdbcConnectionAccess@17dad32f] for (non-JTA) DDL execution was not in auto-commit mode; the Connection 'local transaction' will be committed and the Connection will be set into auto-commit mode.
+2020-11-22 02:28:33 INFO  JtaPlatformInitiator:52 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2020-11-22 02:28:43 INFO  Sign_in:27 - Account '0960960969' entered the system.
+2020-11-22 02:29:24 INFO  MakeTransactionCommand:48 - Account '0960960969' sent 2970.0 to '0976952478'. Our commission was 30.0UAH.
+2020-11-22 02:29:43 INFO  AccountUpgradeCommand:35 - Account '0960960969' became multi-currency. System balance increased by 650UAH.
+2020-11-22 02:31:00 ERROR ConvertToAnotherCurrencyCommand:128 - The exchange rates wasn't determined!!!
+2020-11-22 02:31:43 INFO  AccountUpgradeCommand:63 - Account '0960960969' became GOLD. System balance increased by 5000UAH.
+2020-11-22 02:31:57 INFO  AccountUpgradeCommand:52 - Account '0960960969' became PLATINUM. System balance increased by 10000UAH.
+2020-11-22 02:32:35 INFO  MakeTransactionCommand:48 - Account '0960960969' sent 5000.0 to '0976952478'. Our commission was 0.0UAH.
