@@ -27,16 +27,16 @@ public class Sign_up extends EnteringTheSystem {
         String surname = ConsoleHelper.readString();
         ConsoleHelper.writeMessage("email: " + "\n*should be valid email*");
         String email = ConsoleHelper.readString();
-        dataVerify(number, password, name, surname, email);
+        if (isDataCorrect(number, password, name, surname, email)) {
+            while (!emailVerification(email)) {
 
-        while (!emailVerification(email)) {
-
+            }
+            newAccount = new Account(number, password, name, surname, email);
+            newAccount.setUAH_balance(50.0);
+            dao.save(newAccount);
+            return newAccount;
         }
-
-        newAccount = new Account(number, password, name, surname, email);
-        newAccount.setUAH_balance(50.0);
-        dao.save(newAccount);
-        return newAccount;
+        return signUp();
     }
 
     private boolean emailVerification(String email) throws IOException {
@@ -47,26 +47,27 @@ public class Sign_up extends EnteringTheSystem {
         return userCode.equals(String.valueOf(code));
     }
 
-    private void dataVerify(String phoneNumber, String password, String name, String surname, String email) throws IOException {
+    private boolean isDataCorrect(String phoneNumber, String password, String name, String surname, String email) throws IOException {
         if (!validateNumber(phoneNumber)) {
             ConsoleHelper.writeMessage("\nWrong or used phone number... Try again.\n");
-            signUp();
+            return false;
         }
         if (!validatePassword(password)) {
             ConsoleHelper.writeMessage("\nIncorrect password... Try again.\n");
-            signUp();
+            return false;
         }
         if (!validateEmail(email)) {
             ConsoleHelper.writeMessage("\nIncorrect email... Try again.\n");
-            signUp();
+            return false;
         }
         if (!validateNameAndSurname(name)) {
             ConsoleHelper.writeMessage("\nIncorrect name... Try again.\n");
-            signUp();
+            return false;
         }
         if (!validateNameAndSurname(surname)) {
             ConsoleHelper.writeMessage("\nIncorrect surname... Try again.\n");
-            signUp();
+            return false;
         }
+        return true;
     }
 }

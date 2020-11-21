@@ -1,10 +1,10 @@
 package commands;
 
-import clojure.lang.Cons;
+
 import dao.Dao;
 import helpers.ConsoleHelper;
 import model.Account;
-import org.decimal4j.util.DoubleRounder;
+
 
 public class BalanceCheckCommand extends AbstractAccountCommand {
 
