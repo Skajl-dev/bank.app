@@ -5,11 +5,14 @@ import exceptions.NotEnoughMoneyException;
 import helpers.ConsoleHelper;
 import model.Account;
 import model.Exchange_courses;
+import org.apache.log4j.Logger;
 import org.decimal4j.util.DoubleRounder;
 
 import java.util.Date;
 
 public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
+    private static final Logger log = Logger.getLogger(ConvertToAnotherCurrencyCommand.class);
+
     public ConvertToAnotherCurrencyCommand(Account account, Dao dao) {
         super(account, dao);
     }
@@ -40,8 +43,11 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
                                 payingForSmthMoneyChange(sum1);
                                 boss.setDollar_balance(boss.getDollar_balance() - dollars1);
                                 account.setDollar_balance(account.getDollar_balance() + dollars1);
+                                log.info("Account \'" + account.getPhoneNumber() + "\' bought " + dollars1 + "$. Paid " +
+                                        sum1 + "UAH.");
                                 dao.buySomething(account, boss);
                             } else {
+                                log.error("System out of dollars!!!");
                                 ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
                             }
                         }
@@ -59,11 +65,14 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
                                     boss.setDollar_balance(boss.getDollar_balance() + sum2);
                                     account.setUAH_balance(account.getUAH_balance() + grn2);
                                     boss.setUAH_balance(boss.getUAH_balance() - grn2);
+                                    log.info("Account \'" + account.getPhoneNumber() + "\' bought " + grn2 + "UAH. Paid " +
+                                            sum2 + "$.");
                                     dao.buySomething(account, boss);
                                 } else {
                                     ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
                                 }
                             } else {
+                                log.error("System out of UAH's!!!");
                                 throw new NotEnoughMoneyException("Not enough money...");
                             }
                         }
@@ -80,8 +89,11 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
                                 payingForSmthMoneyChange(sum3);
                                 boss.setEuro_balance(boss.getEuro_balance() - euro3);
                                 account.setEuro_balance(account.getEuro_balance() + euro3);
+                                log.info("Account \'" + account.getPhoneNumber() + "\' bought " + euro3 + "€. Paid " +
+                                        sum3 + "UAH.");
                                 dao.buySomething(account, boss);
                             } else {
+                                log.error("System out of euros!!!");
                                 ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
                             }
                         }
@@ -99,8 +111,11 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
                                     boss.setEuro_balance(boss.getEuro_balance() + sum4);
                                     account.setUAH_balance(account.getUAH_balance() + grn4);
                                     boss.setUAH_balance(boss.getUAH_balance() - grn4);
+                                    log.info("Account \'" + account.getPhoneNumber() + "\' bought " + grn4 + "UAH. Paid " +
+                                            sum4 + "€.");
                                     dao.buySomething(account, boss);
                                 } else {
+                                    log.error("System out of UAH's!!!");
                                     ConsoleHelper.writeMessage(SYSTEM_OUT_OF_MONEY);
                                 }
                             } else {
@@ -110,6 +125,7 @@ public class ConvertToAnotherCurrencyCommand extends AbstractAccountCommand {
                         break;
                 }
             } else {
+                log.error("The exchange rates wasn't determined!!!");
                 ConsoleHelper.writeMessage("Unfortunately, we have not yet determined the exchange rates for today." +
                         "\nPlease try again later.");
             }

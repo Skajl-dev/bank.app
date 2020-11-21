@@ -2,11 +2,13 @@ package entrering;
 import dao.Dao;
 import helpers.ConsoleHelper;
 import model.Account;
+import org.apache.log4j.Logger;
 
 import java.io.IOException;
 
 public class Sign_up extends EnteringTheSystem {
     EmailCodeSender emailCodeSender;
+    private static final Logger log = Logger.getLogger(Sign_up.class);
 
     public Sign_up(Dao dao, EmailCodeSender emailCodeSender) {
         super(dao);
@@ -34,6 +36,7 @@ public class Sign_up extends EnteringTheSystem {
             newAccount = new Account(number, password, name, surname, email);
             newAccount.setUAH_balance(50.0);
             dao.save(newAccount);
+            log.info("Account \'" + newAccount.getPhoneNumber() + "\' joined the system.");
             return newAccount;
         }
         return signUp();

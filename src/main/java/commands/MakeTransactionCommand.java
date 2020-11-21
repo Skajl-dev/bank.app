@@ -1,14 +1,17 @@
 package commands;
 
 import dao.Dao;
+import entrering.Sign_in;
 import exceptions.NotEnoughMoneyException;
 import helpers.ConsoleHelper;
 import model.Account;
+import org.apache.log4j.Logger;
 import org.decimal4j.util.DoubleRounder;
 
 import java.io.IOException;
 
 public class MakeTransactionCommand extends AbstractAccountCommand {
+    private static final Logger log = Logger.getLogger(MakeTransactionCommand.class);
 
     public MakeTransactionCommand(Account account, Dao dao) {
         super(account, dao);
@@ -42,6 +45,8 @@ public class MakeTransactionCommand extends AbstractAccountCommand {
                 boss.setUAH_balance(boss.getUAH_balance() + fee);
                 Account receiver = dao.findByNumber(number);
                 receiver.setUAH_balance(receiver.getUAH_balance() + sumToSend);
+                log.info("Account \'" + account.getPhoneNumber() + "\' sent " + sumToSend + " to \'" +
+                        receiver.getPhoneNumber() + "\'. Our commission was " + fee + "UAH.");
                 dao.makeTransaction(account, receiver, boss);
             } else {
                 throw new NotEnoughMoneyException("Not enough money...");
